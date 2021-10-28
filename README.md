@@ -18,3 +18,11 @@ g++ -std=c++17 -fopenmp parallel.cpp -o parallel.out
 ```sh
 ./parallel.out -problemType [all, find] -N <queens>
 ```
+
+## Results
+Generate chessboard for a solution with `dot` from Graphviz.
+```sh
+dot -Tpng graph.dot -o graph.png
+```
+![Chessboard with six queens](./img/graph.png)
+
