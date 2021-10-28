@@ -11,6 +11,7 @@ Integrantes:
 
 ## Compile
 ```sh
+cd src/
 g++ -std=c++17 -fopenmp parallel.cpp -o parallel.out
 ```
 
