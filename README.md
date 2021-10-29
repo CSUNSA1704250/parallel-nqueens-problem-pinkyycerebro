@@ -20,6 +20,16 @@ g++ -std=c++17 -fopenmp parallel.cpp -o parallel.out
 ./parallel.out -problemType [all, find] -N <queens>
 ```
 
+## Examples
+- Printing all solutions
+```sh
+time ./parallel.out -problemType all -N 6 > solutions.txt
+```
+- Find a solution and generate `graph.dot` file.
+```sh
+time ./parallel.out -problemType find -N 6
+```
+
 ## Results
 Generate chessboard for a solution with `dot` from Graphviz.
 ```sh
