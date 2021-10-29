@@ -12,7 +12,7 @@ Integrantes:
 ## Compile
 ```sh
 cd src/
-g++ -std=c++17 -fopenmp parallel.cpp -o parallel.out
+g++ -std=c++17 -O2 -fopenmp parallel.cpp -o parallel.out
 ```
 
 ## Run
