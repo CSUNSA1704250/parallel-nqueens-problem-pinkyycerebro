@@ -1,0 +1,4 @@
+*.out
+*.dot
+*.png
+!graph.png
