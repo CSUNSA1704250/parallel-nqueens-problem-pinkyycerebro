@@ -24,7 +24,6 @@ Integrantes:
 │   └── parallel.txt
 ├── README.md
 ├── src
-│   ├── graph.dot
 │   ├── parallel_all.cpp
 │   ├── parallel.cpp
 │   ├── serial.cpp
@@ -38,19 +37,14 @@ cd src/
 g++ -std=c++17 -O2 -fopenmp parallel_all.cpp -o parallel_all.out
 ```
 
-## Run
-```sh
-./parallel_all.out <queens>
-```
-
 ## Examples
 - Printing all solutions
 ```sh
-time ./parallel.out -problemType all -N 6 > solutions.txt
+time ./parallel_all.out <queens> > solutions.txt
 ```
 - Find a solution and generate board.
 ```sh
-time ./parallel.out -problemType find -N 6 &&
+time ./parallel.out -problemType find -N <queens> &&
 dot -Tpng graph.dot -o graph.png
 ```
 
