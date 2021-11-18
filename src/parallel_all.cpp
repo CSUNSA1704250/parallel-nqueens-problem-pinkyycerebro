@@ -1,40 +1,36 @@
 #include <omp.h>
-#include <sys/time.h>
-#include <time.h>
 
 #include <iostream>
 #include <sstream>
 
-// Number of solutions found
-int numofSol = 0;
+int num_solutions = 0;
 
-std::ostringstream globalOss;
+std::ostringstream buffer;
 
-int N;
+int size;
 
-void placeQ(int queens[], int row, int column) {
+void SetQueen(int queens[], int row, int column) {
   for (int i = 0; i < row; i++) {
-    // Vertical
+    // vertical attacks
     if (queens[i] == column) {
       return;
     }
-
-    // Two queens in the same diagonal
+    // diagonal attacks
     if (abs(queens[i] - column) == (row - i)) {
       return;
     }
   }
-
-  // Set the queen
+  // column is ok, set the queen
   queens[row] = column;
 
-  if (row == N - 1) {
+  if (row == size - 1) {
 #pragma omp atomic
-    numofSol++;
+    num_solutions++;
 
     std::ostringstream oss;
-    for (int row = 0; row < N; row++) {
-      for (int column = 0; column < N; column++) {
+
+    for (int row = 0; row < size; row++) {
+      for (int column = 0; column < size; column++) {
         if (queens[row] == column) {
           oss << column + 1 << " ";
         }
@@ -42,27 +38,26 @@ void placeQ(int queens[], int row, int column) {
     }
     oss << std::endl;
 #pragma omp critical
-    globalOss << oss.str();
+    buffer << oss.str();
   }
 
   else {
     // Increment row
-    for (int i = 0; i < N; i++) {
-      placeQ(queens, row + 1, i);
+    for (int i = 0; i < size; i++) {
+      SetQueen(queens, row + 1, i);
     }
   }
 }
 
-void solve() {
-#pragma omp parallel  // num_threads (30)
+void Solve() {
+#pragma omp parallel
 #pragma omp single
   {
-    for (int i = 0; i < N; i++) {
-// New task added for first row and each column recursion.
+    for (int i = 0; i < size; i++) {
 #pragma omp task
       {
-        int arr[N];
-        placeQ(arr, 0, i);
+        int arr[size];
+        SetQueen(arr, 0, i);
       }
     }
   }
@@ -75,12 +70,12 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  N = std::atoi(argv[1]);
-  solve();
+  size = std::atoi(argv[1]);
+  Solve();
 
-  std::cout << "#Solutions for " << N << " queens." << std::endl;
-  std::cout << numofSol << std::endl;
+  std::cout << "#Solutions for " << size << " queens." << std::endl;
+  std::cout << num_solutions << std::endl;
 
-  std::cout << globalOss.str();
+  std::cout << buffer.str();
   return 0;
 }
