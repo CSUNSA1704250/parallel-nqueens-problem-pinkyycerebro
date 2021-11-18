@@ -16,5 +16,5 @@ if [ "$2" = "all" ]; then
   echo -e "With parallel (v2.0) \t $cal_t"
 else
   echo "No implementation of parallel_find.cpp were found."
-  dot -Tpng graph.dot -o graph.png
+  dot -Tpng graph.dot -o img/graph.png
 fi
