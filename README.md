@@ -3,21 +3,44 @@
 # Parallelizing N-Queens
 
 Integrantes:
-- Sharon Chullunquía Rosas
+- Sharon Rossely Alisson Chullunquía Rosas
 - Jerson Zúñiga Coayla
 
 ## Requirements
 - [OpenMP](https://www.openmp.org/)
 
+## Project tree
+```sh
+.
+├── bin
+│   ├── parallel_all.out
+│   ├── parallel.out
+│   └── serial.out
+├── img
+│   └── graph.png
+├── Makefile
+├── out
+│   ├── parallel_all.txt
+│   └── parallel.txt
+├── README.md
+├── src
+│   ├── graph.dot
+│   ├── parallel_all.cpp
+│   ├── parallel.cpp
+│   ├── serial.cpp
+│   └── utils.cpp
+└── test.sh
+```
+
 ## Compile
 ```sh
 cd src/
-g++ -std=c++17 -O2 -fopenmp parallel.cpp -o parallel.out
+g++ -std=c++17 -O2 -fopenmp parallel_all.cpp -o parallel_all.out
 ```
 
 ## Run
 ```sh
-./parallel.out -problemType [all, find] -N <queens>
+./parallel_all.out <queens>
 ```
 
 ## Examples
@@ -25,15 +48,29 @@ g++ -std=c++17 -O2 -fopenmp parallel.cpp -o parallel.out
 ```sh
 time ./parallel.out -problemType all -N 6 > solutions.txt
 ```
-- Find a solution and generate `graph.dot` file.
+- Find a solution and generate board.
 ```sh
-time ./parallel.out -problemType find -N 6
+time ./parallel.out -problemType find -N 6 &&
+dot -Tpng graph.dot -o graph.png
+```
+
+## Performance test
+```sh
+./test.sh -problemType [all, find] -N <queens>
 ```
 
 ## Results
-Generate chessboard for a solution with `dot` from Graphviz.
 ```sh
-dot -Tpng graph.dot -o graph.png
+~PD/Practices/parallel-nqueens-problem-pinkyycerebro develop
+❯ ./test.sh -problemType all -N 15
+
+> Compile source code.
+g++ -std=c++17 -O2 -fopenmp -o bin/serial.out src/serial.cpp
+g++ -std=c++17 -O2 -fopenmp -o bin/parallel.out src/parallel.cpp
+g++ -std=c++17 -O2 -fopenmp -o bin/parallel_all.out src/parallel_all.cpp
+
+> Calculate.
+With parallel            0m34.137s
+With parallel (v2.0)     0m22.497s
 ```
-![Chessboard with six queens](./img/graph.png)
 
