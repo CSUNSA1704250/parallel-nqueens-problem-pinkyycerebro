@@ -5,8 +5,8 @@ make
 echo
 
 echo "> Calculate."
-cal_t=$((time bin/serial.out -problemType $2 -N $4 > out/serial.txt) 2>&1 > /dev/null | grep real | awk '{print $2}')
-echo -e "With serial \t\t $cal_t"
+#cal_t=$((time bin/serial.out -problemType $2 -N $4 > out/serial.txt) 2>&1 > /dev/null | grep real | awk '{print $2}')
+#echo -e "With serial \t\t $cal_t"
 
 cal_t=$((time bin/parallel.out -problemType $2 -N $4 > out/parallel.txt) 2>&1 > /dev/null | grep real | awk '{print $2}')
 echo -e "With parallel \t\t $cal_t"
