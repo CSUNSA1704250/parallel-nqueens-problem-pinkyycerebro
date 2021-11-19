@@ -34,15 +34,18 @@ Integrantes:
 ## Compile
 ```sh
 cd src/
+```
+- Printing all solutions
+```sh
 g++ -std=c++17 -O2 -fopenmp parallel_all.cpp -o parallel_all.out
 ```
-
-## Examples
-- Printing all solutions
 ```sh
 time ./parallel_all.out <queens> > solutions.txt
 ```
 - Find a solution and generate board.
+```sh
+g++ -std=c++17 -O2 -fopenmp parallel.cpp -o parallel.out
+```
 ```sh
 time ./parallel.out -problemType find -N <queens> &&
 dot -Tpng graph.dot -o graph.png
